@@ -123,3 +123,19 @@ h1 {
     color: #0CD977;
     cursor: default;
 }
+
+/*
+mie modifice
+*/
+.standardIcon{
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #023047;
+    font-size: 2rem;
+    font-weight: 600;
+    color:white;
+    border-radius: 50%;
+}
