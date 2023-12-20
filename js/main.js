@@ -83,7 +83,6 @@ const posts = [
 ];
 //input container
 let objPost = document.getElementById("container");
-console.log("objPost continete:", objPost, typeof objPost)
 
 //fine array di oggetti
 for (let i = 0; i < posts.length; i++) {
@@ -92,7 +91,8 @@ for (let i = 0; i < posts.length; i++) {
     if (posts[i].author.image == null){
        userPhoto = document.createElement("div");
        userPhoto.classList.add("standardIcon");
-       userPhoto.append(posts[i].author.name[0]);
+       let iniziali = posts[i].author.name[0] + posts[i].author.name[findLastName(posts[i].author.name)]
+       userPhoto.append(iniziali);
     }
     else{
         userPhoto = document.createElement("img");
@@ -141,20 +141,30 @@ for (let i = 0; i < posts.length; i++) {
 //MILESTONE 3 SVOLGIMENTO
 //prendo in input tutti i button like del DOM
 const likeButton = document.querySelectorAll(".like-button")
-console.log("likebutton contiene", likeButton, typeof likeButton)
-const liked = [];
+
 for (let i = 0; i < likeButton.length; i++) {
     console.log(i, "questo è il pulsante", likeButton[i])
     likeButton[i].addEventListener("click", function(){
         this.classList.toggle("like-button--liked");
-
+        let totLike = parseInt(document.getElementById("like-counter-"+(i+1)).innerHTML);
+        //controllo se il pulsante ha la classe like-button--liked in caso aggiungi 1 in più ai like
         if(!(this.classList.contains("like-button--liked"))){
-            let totLike = parseInt(document.getElementById("like-counter-"+(i+1)).innerHTML);
-            document.getElementById("like-counter-"+(i+1)).innerHTML=(totLike - 1); 
+            document.getElementById("like-counter-"+(i+1)).innerHTML = (totLike - 1); 
         }
         else{
-            let totLike = parseInt(document.getElementById("like-counter-"+(i+1)).innerHTML);
-            document.getElementById("like-counter-"+(i+1)).innerHTML=(totLike + 1);
-        }   
+            document.getElementById("like-counter-"+(i+1)).innerHTML = (totLike + 1);
+        }
     })
+}
+
+//my function
+//funzione per prelevare la lettera del cognome
+function findLastName(nameString){
+    let position = 0;
+    for (let i = 0; i < nameString.length; i++) {
+        if(nameString[i] == " "){
+            position=i+1;
+            return(position);
+        }
+    }
 }
