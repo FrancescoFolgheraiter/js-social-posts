@@ -88,6 +88,7 @@ console.log("objPost continete:", objPost, typeof objPost)
 //fine array di oggetti
 for (let i = 0; i < posts.length; i++) {
     let userPhoto;
+    //controllo se il profilo ha un immagine oppure no
     if (posts[i].author.image == null){
        userPhoto = document.createElement("div");
        userPhoto.classList.add("standardIcon");
@@ -99,7 +100,7 @@ for (let i = 0; i < posts.length; i++) {
         userPhoto.src = posts[i].author.image;
         userPhoto.alt = posts[i].author.name;
     }
-    console.log(i,"userPhoto continene", userPhoto, typeof userPhoto)
+    //creo struttura nel mio DOM
     objPost.innerHTML +=`
     <div class="post">
         <div class="post__header">
@@ -120,20 +121,40 @@ for (let i = 0; i < posts.length; i++) {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <a class="like-button  js-like-button" href="#nogo" data-postid="${i+1}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+                    Piace a <b id="like-counter-${i+1}" class="js-likes-counter">${posts[i].likes}</b> persone
                 </div>
             </div> 
         </div>            
     </div>
    `;
+   //vado a modificare la parte riguardo l'immagine
    const postMetaIcon = document.querySelector(".post:last-child .post-meta__icon");
    postMetaIcon.append(userPhoto)
-   console.log(i,"post meta icon contine",postMetaIcon, typeof postMetaIcon);
+}
 
+//MILESTONE 3 SVOLGIMENTO
+//prendo in input tutti i button like del DOM
+const likeButton = document.querySelectorAll(".like-button")
+console.log("likebutton contiene", likeButton, typeof likeButton)
+const liked = [];
+for (let i = 0; i < likeButton.length; i++) {
+    console.log(i, "questo è il pulsante", likeButton[i])
+    likeButton[i].addEventListener("click", function(){
+        this.classList.toggle("like-button--liked");
+
+        if(!(this.classList.contains("like-button--liked"))){
+            let totLike = parseInt(document.getElementById("like-counter-"+(i+1)).innerHTML);
+            document.getElementById("like-counter-"+(i+1)).innerHTML=(totLike - 1); 
+        }
+        else{
+            let totLike = parseInt(document.getElementById("like-counter-"+(i+1)).innerHTML);
+            document.getElementById("like-counter-"+(i+1)).innerHTML=(totLike + 1);
+        }   
+    })
 }
