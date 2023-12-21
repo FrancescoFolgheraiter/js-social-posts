@@ -91,7 +91,7 @@ for (let i = 0; i < posts.length; i++) {
     if (posts[i].author.image == null){
        userPhoto = document.createElement("div");
        userPhoto.classList.add("standardIcon");
-       let iniziali = posts[i].author.name[0] + posts[i].author.name[findLastName(posts[i].author.name)]
+       let iniziali = posts[i].author.name[0] + posts[i].author.name[findLastName(posts[i].author.name)];
        userPhoto.append(iniziali);
     }
     else{
@@ -145,14 +145,19 @@ const likeButton = document.querySelectorAll(".like-button")
 for (let i = 0; i < likeButton.length; i++) {
     console.log(i, "questo è il pulsante", likeButton[i])
     likeButton[i].addEventListener("click", function(){
+        //potevo usare anche la soluzione dataset
+        //dataset restituisce un array di valori degli attributi data precedentemente SELEZIONATI
+        //mi devo salvare prima in una variabile l'id del post
+        //e fare una condizione sul postid 
+        //posso usare anche getAttribute("") per recuperare l'attributo; 
         this.classList.toggle("like-button--liked");
         let totLike = parseInt(document.getElementById("like-counter-"+(i+1)).innerHTML);
         //controllo se il pulsante ha la classe like-button--liked in caso aggiungi 1 in più ai like
-        if(!(this.classList.contains("like-button--liked"))){
-            document.getElementById("like-counter-"+(i+1)).innerHTML = (totLike - 1); 
+        if(this.classList.contains("like-button--liked")){
+            document.getElementById("like-counter-"+(i+1)).innerHTML = (totLike + 1);
         }
         else{
-            document.getElementById("like-counter-"+(i+1)).innerHTML = (totLike + 1);
+            document.getElementById("like-counter-"+(i+1)).innerHTML = (totLike - 1); 
         }
     })
 }
@@ -163,7 +168,7 @@ function findLastName(nameString){
     let position = 0;
     for (let i = 0; i < nameString.length; i++) {
         if(nameString[i] == " "){
-            position=i+1;
+            position = i + 1;
             return(position);
         }
     }
